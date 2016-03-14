@@ -1,0 +1,27 @@
+<div gridster="gridsterOptions">
+	<ul>
+		<li gridster-item="widget" ng-repeat="widget in dashboard.widgets">
+			<div class="box" ng-controller="CustomWidgetCtrl">
+				<div class="box-header">
+					<h3>{{ widget.name }}</h3>
+					<div class="box-header-btns pull-right">
+						<a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>
+						<a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
+					</div>
+				</div>
+				<div class="box-content" ng-if="widget.type == 'NumberItem'" >
+                    <span class="widget-state">{{widget.state}}</span>
+				</div>
+                <div class="box-content" ng-if="widget.type == 'SwitchItem'" ng-click="changeState(widget)">
+                    <img src="assets/images/light_off.png" ng-if="widget.state=='OFF'" />
+                    <img src="assets/images/light_on.png" ng-if="widget.state=='ON'" />
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<div class="page-header">
+	<a class="pull-right btn btn-primary" ng-click="addWidget()"><i class="glyphicon glyphicon-plus"></i> Add Widget</a>
+	<a class="pull-right btn btn-warning" ng-click="clear()"><i class="glyphicon glyphicon-trash"></i> Clear</a>
+    <a class="pull-right btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-save"></i> Save</a>
+</div>

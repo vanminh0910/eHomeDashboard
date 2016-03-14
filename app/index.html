@@ -1,0 +1,48 @@
+<html lang="en" ng-app="app">
+    <title>eHome Dashboard</title>
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="">
+    <!--<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />-->
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.css" rel="stylesheet">
+    
+    <!-- build:css assets/stylesheets/vendor.css -->
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="../bower_components/nvd3/build/nv.d3.css">
+    <link rel="stylesheet" href="../bower_components/angular-gridster/dist/angular-gridster.min.css"/>
+    <!-- endbuild -->
+    
+    <!-- build:css assets/stylesheets/app.css -->
+    <link rel="stylesheet" href="assets/stylesheets/style.css" />
+    <link rel="stylesheet" href="assets/stylesheets/style.css" />
+    <!-- endbuild -->
+<body>
+    <div ng-controller="RootCtrl" class="container1" ng-view></div>
+
+    <!-- build:js scripts/vendor.js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-aria/angular-aria.js"></script>
+    <script src="../bower_components/angular-material/angular-material.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/d3/d3.js"></script>
+    <script src="../bower_components/nvd3/build/nv.d3.js"></script> <!-- or use another assembly -->
+    <script src="../bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+    <script src="../bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+    <script src="../bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
+    <!-- endbuild -->
+    <script src="https://code.angularjs.org/1.2.15/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+   
+    <!-- build:app scripts/app.js -->
+    <script src="./scripts/app.js"></script>
+    <script src="./scripts/dashboard/dashboardService.js"></script>
+    <script src="./scripts/dashboard/dashboardController.js"></script>
+    <!-- endbuild -->
+</body>
+</html>
