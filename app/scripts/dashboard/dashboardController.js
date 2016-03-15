@@ -1,9 +1,14 @@
 angular.module('app')
 
-.controller('DashboardCtrl', ['$scope', '$interval', '$timeout', 'dashboardService', 
-	function($scope, $interval, $timeout, dashboardService) {
+.controller('DashboardCtrl', ['$scope', '$interval', '$timeout', 'dashboardService', '$location', '$rootScope',
+	function($scope, $interval, $timeout, dashboardService, $location, $rootScope) {
         
         function init() {
+            if ($rootScope.dashboards)
+                $scope.dashboards = $rootScope.dashboards;
+            else {
+                $scope.initializeDashboards();
+            }
             $scope.dashboard = $scope.dashboards['1'];
             $scope.polling_status = false;
             $scope.start_polling();
@@ -42,154 +47,123 @@ angular.module('app')
             } 
 		};
         
-        $scope.dashboards = {"1":{"id":"1","name":"Home","widgets":[{"col":0,"row":2,"sizeY":1,"sizeX":1,"name":"Bedroom 1","type":"NumberItem","state":"31.8","link":"http://192.168.1.110:8080/rest/items/Living_Temp","$$hashKey":"object:5"},{"col":0,"row":4,"sizeY":1,"sizeX":1,"name":"Nhiệt Độ","type":"NumberItem","state":"31.8","link":"http://192.168.1.110:8080/rest/items/Living_Temp","$$hashKey":"object:6"},{"col":0,"row":1,"sizeY":1,"sizeX":1,"name":"Kitchen","type":"NumberItem","state":"59.7","link":"http://192.168.1.110:8080/rest/items/Living_Humid","$$hashKey":"object:7"},{"col":2,"row":2,"sizeY":1,"sizeX":1,"name":"Đèn Chính","type":"SwitchItem","state":"ON","link":"http://192.168.1.110:8080/rest/items/Light_Living_LED","$$hashKey":"object:8"},{"col":1,"row":2,"sizeY":1,"sizeX":1,"name":"Đèn Chính","type":"SwitchItem","state":"ON","link":"http://192.168.1.110:8080/rest/items/Light_Living_LED","$$hashKey":"object:10"},{"col":2,"row":1,"sizeY":1,"sizeX":1,"name":"Đèn Vàng","type":"SwitchItem","state":"ON","link":"http://192.168.1.110:8080/rest/items/Light_Living_LED","$$hashKey":"object:11"},{"col":3,"row":0,"sizeY":1,"sizeX":1,"name":"Đèn Chính","type":"SwitchItem","state":"ON","link":"http://192.168.1.110:8080/rest/items/Light_Living_LED","$$hashKey":"object:12"},{"col":2,"row":0,"sizeY":1,"sizeX":1,"name":"Đèn Chính","type":"SwitchItem","state":"ON","link":"http://192.168.1.110:8080/rest/items/Light_Living_LED","$$hashKey":"object:13"},{"col":0,"row":0,"sizeY":1,"sizeX":1,"name":"Living Room","type":"NumberItem","state":"31.8","link":"http://192.168.1.110:8080/rest/items/Living_Temp","$$hashKey":"object:15"},{"col":0,"row":3,"sizeY":1,"sizeX":1,"name":"Bedroom 2","type":"NumberItem","state":"59.7","link":"http://192.168.1.110:8080/rest/items/Living_Humid","$$hashKey":"object:16"},{"col":1,"row":0,"sizeY":1,"sizeX":1,"name":"Đèn Chính","type":"SwitchItem","state":"ON","link":"http://192.168.1.110:8080/rest/items/Light_Living_LED","$$hashKey":"object:17"},{"col":1,"row":1,"sizeY":1,"sizeX":1,"name":"Đèn Trắng","type":"SwitchItem","state":"ON","link":"http://192.168.1.110:8080/rest/items/Light_Living_SUB","$$hashKey":"object:18"},{"name":"Weather Chart","sizeX":3,"sizeY":4,"$$hashKey":"object:163","row":0,"col":5},{"name":"Moisture","sizeX":1,"sizeY":1,"$$hashKey":"object:189","row":4,"col":1},{"name":"Đèn Chính","sizeX":1,"sizeY":1,"$$hashKey":"object:193","row":3,"col":1},{"name":"Đèn Tròn","sizeX":1,"sizeY":1,"$$hashKey":"object:197","row":3,"col":2},{"name":"Moisture 2","sizeX":1,"sizeY":1,"$$hashKey":"object:211","row":4,"col":2},{"name":"Đèn Hắt","sizeX":1,"sizeY":1,"$$hashKey":"object:221","row":2,"col":3},{"name":"Washer","sizeX":1,"sizeY":1,"$$hashKey":"object:229","row":4,"col":3},{"name":"Clock","sizeX":3,"sizeY":1,"$$hashKey":"object:241","row":4,"col":5},{"name":"B1_Presence","sizeX":1,"sizeY":1,"$$hashKey":"object:255","row":2,"col":4},{"name":"B2_Presence","sizeX":1,"sizeY":1,"$$hashKey":"object:259","row":3,"col":3},{"name":"Door Lock","sizeX":1,"sizeY":1,"$$hashKey":"object:263","row":4,"col":4},{"name":"Khí Độc","sizeX":1,"sizeY":1,"$$hashKey":"object:93","row":1,"col":4},{"name":"Khói","sizeX":1,"sizeY":1,"$$hashKey":"object:97","row":1,"col":3}]},"2":{"id":"2","name":"Other","widgets":[{"col":1,"row":1,"sizeY":1,"sizeX":2,"name":"Other Widget 1"},{"col":1,"row":3,"sizeY":1,"sizeX":1,"name":"Other Widget 2"}]}};
-        
-        /*
-
-		$scope.dashboards = {
-			'1': {
-				id: '1',
-				name: 'Home',
-				widgets: [{
-					col: 4,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Right Widget",
-                    type: "NumberItem",
-                    state: "30.5",
-                    link: "http://192.168.1.110:8080/rest/items/Living_Temp"
-				}, {
-					col: 0,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Nhiệt Độ",
-                    type: "NumberItem",
-                    state: "30.5",
-                    link: "http://192.168.1.110:8080/rest/items/Living_Temp"
-				}, {
-					col: 1,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Độ Ẩm",
-                    type: "NumberItem",
-                    state: "65.2",
-                    link: "http://192.168.1.110:8080/rest/items/Living_Humid"
-				}, {
-					col: 3,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Đèn Chính",
-                    type: "SwitchItem",
-                    state: "ON",
-                    link: "http://192.168.1.110:8080/rest/items/Light_Living_LED"
-                }, {
-					col: 3,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Đèn Chính",
-                    type: "SwitchItem",
-                    state: "ON",
-                    link: "http://192.168.1.110:8080/rest/items/Light_Living_LED"
-                }, {
-					col: 3,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Đèn Chính",
-                    type: "SwitchItem",
-                    state: "ON",
-                    link: "http://192.168.1.110:8080/rest/items/Light_Living_LED"
-                }, {
-					col: 3,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Đèn Chính",
-                    type: "SwitchItem",
-                    state: "ON",
-                    link: "http://192.168.1.110:8080/rest/items/Light_Living_LED"
-                }, {
-					col: 3,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Đèn Chính",
-                    type: "SwitchItem",
-                    state: "ON",
-                    link: "http://192.168.1.110:8080/rest/items/Light_Living_LED"
-                }, {
-					col: 3,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Đèn Chính",
-                    type: "SwitchItem",
-                    state: "ON",
-                    link: "http://192.168.1.110:8080/rest/items/Light_Living_LED"
-                }, {
+        $scope.initializeDashboards = function() {
+            $scope.dashboards = {
+            "1":{
+                "id":"1",
+                "name":"Dashboard",
+                "widgets":[
+                    // Living room
+                    {
+                        "col":0, "row":0, "sizeY":1, "sizeX":1, "$$hashKey":"object:1",
+                        "name":"Phòng Khách", "type":"NumberItem", "state":"",
+                        "link":"http://192.168.1.110:8080/rest/items/Living_Temp"
                     }, {
-					col: 0,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Nhiệt Độ",
-                    type: "NumberItem",
-                    state: "30.5",
-                    link: "http://192.168.1.110:8080/rest/items/Living_Temp"
-				}, {
-					col: 1,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Độ Ẩm",
-                    type: "NumberItem",
-                    state: "65.2",
-                    link: "http://192.168.1.110:8080/rest/items/Living_Humid"
-				}, {
-					col: 3,
-					row: 0,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Đèn Chính",
-                    type: "SwitchItem",
-                    state: "ON",
-                    link: "http://192.168.1.110:8080/rest/items/Light_Living_LED"
-                }, {
-					col: 0,
-					row: 1,
-					sizeY: 1,
-					sizeX: 2,
-					name: "Đèn Vàng",
-                    type: "SwitchItem",
-                    state: "OFF",
-                    link: "http://192.168.1.110:8080/rest/items/Light_Living_SUB"
-				}]
-			},
-			'2': {
-				id: '2',
-				name: 'Other',
-				widgets: [{
-					col: 1,
-					row: 1,
-					sizeY: 1,
-					sizeX: 2,
-					name: "Other Widget 1"
-				}, {
-					col: 1,
-					row: 3,
-					sizeY: 1,
-					sizeX: 1,
-					name: "Other Widget 2"
-				}]
-			}
-		};
-        
-        */
+                        "col":1, "row":0, "sizeY":1, "sizeX":1, "$$hashKey":"object:2",
+                         "name":"Đèn Chính", "type":"SwitchItem", "state":"OFF",
+                        "link":"http://192.168.1.110:8080/rest/items/Light_Living_LED"
+                    }, {
+                        "col":2,"row":0, "sizeY":1, "sizeX":1, "$$hashKey":"object:3",
+                        "name":"Đèn Vàng", "type":"SwitchItem","state":"OFF",
+                        "link":"http://192.168.1.110:8080/rest/items/Light_Living_SUB"
+                    }, ,{
+                        "col":3, "row":0, "sizeY":1, "sizeX":1, "$$hashKey":"object:4",
+                        "name":"Đèn Tròn", "type":"SwitchItem", "state":"OFF",
+                        "link":"http://192.168.1.110:8080/rest/items/Light_Living_SUB"
+                    },
+                    
+                    // Kitchen 
+                    {
+                        "col":0, "row":1, "sizeY":1, "sizeX":1, "$$hashKey":"object:5",
+                        "name":"Phòng Bếp", "type":"NumberItem", "state":"",
+                        "link":"http://192.168.1.110:8080/rest/items/Living_Humid"
+                    }, {
+                        "col":1, "row":1, "sizeY":1, "sizeX":1, "$$hashKey":"object:6",
+                        "name":"Đèn Trắng", "type":"SwitchItem", "state":"OFF",
+                        "link":"http://192.168.1.110:8080/rest/items/Kitchen_Living_LED"
+                    }, {
+                        "col":2, "row":1, "sizeY":1, "sizeX":1, "$$hashKey":"object:7",
+                        "name":"Đèn Vàng", "type":"SwitchItem", "state":"OFF",
+                        "link":"http://192.168.1.110:8080/rest/items/Kitchen_Living_SUB"
+                    }, {
+                        "col":4, "row":1, "sizeX":1, "sizeY":1, "$$hashKey":"object:8",
+                        "name":"Khí Độc",
+                        "link": ""
+                    },{
+                        "col":3, "row":1, "sizeX":1, "sizeY":1, "$$hashKey":"object:9",
+                        "name": "Báo Khói",
+                    }, 
+                    
+                    // Bedroom 1
+                    {
+                        "col":0, "row":2, "sizeY":1, "sizeX":1, "$$hashKey":"object:10",
+                        "name":"Phòng 1", "type":"NumberItem", "state":"",
+                        "link":"http://192.168.1.110:8080/rest/items/Living_Temp"
+                    },{
+                        "col":1, "row":2, "sizeY":1, "sizeX":1, "$$hashKey":"object:11",
+                        "name":"Đèn Chính", "type":"SwitchItem", "state":"OFF",
+                        "link":"http://192.168.1.110:8080/rest/items/Light_Bedroom1_LED"
+                    },{
+                        "col":2, "row":2, "sizeY":1, "sizeX":1, "$$hashKey":"object:12",
+                        "name":"Đèn Vàng", "type":"SwitchItem", "state":"OFF",
+                        "link":"http://192.168.1.110:8080/rest/items/Light_Bedroom1_SUB"
+                    },{
+                        "col":3, "row":2, "sizeX":1, "sizeY":1, "$$hashKey":"object:13",
+                        "name":"Đèn Hắt", "type":"SwitchItem", "state":"OFF",
+                        "link":"http://192.168.1.110:8080/rest/items/Light_Bedroom1_BULB"
+                    },{
+                        "col":4, "row":2," sizeX":1, "sizeY":1, "$$hashKey":"object:14",
+                        "name":"Presence", "state": "10:34PM"
+                    },
+                    // Bedroom 2
+                    {
+                        "col":0, "row":3, "sizeY":1, "sizeX":1, "$$hashKey":"object:15",
+                        "name":"Phòng 2", "type":"NumberItem", "state":"29.4",
+                        "link":"http://192.168.1.110:8080/rest/items/Bedroom1_Temp"
+                    },{
+                        "col":1, "row":3, "name":"Đèn Chính", "sizeX":1, "sizeY":1, "$$hashKey":"object:16"
+                    },{
+                        "col":2, "row":3, "name":"Đèn Tròn","sizeX":1, "sizeY":1, "$$hashKey":"object:17"
+                    },{
+                        "col":3, "row":3, "sizeX":1, "sizeY":1, "$$hashKey":"object:18",
+                        "name":"Presence", "state": "10:54PM"
+                    },
+                    // Outside
+                    {
+                        "col":0, "row":4, "sizeY":1, "sizeX":1, "$$hashKey":"object:19",
+                        "name":"Bên Ngoài", "type":"NumberItem", "state":"31.8",
+                        "link":"http://192.168.1.110:8080/rest/items/Outside_Temp"
+                    },{
+                        "col":1, "row":4, "sizeX":1, "sizeY":1, "$$hashKey":"object:20",
+                        "name":"Độ Ẩm Vườn", "type":"NumberItem", "state":"56%", 
+                        "link":"http://192.168.1.110:8080/rest/items/Garden_Moisture"
+                    },{
+                        "col":2, "row":4, "sizeX":1,"sizeY":1,"$$hashKey":"object:21",
+                        "name":"Độ Ẩm Vườn", "type":"NumberItem", "state":"59%",
+                    },{
+                        "col":3, "row":4,"sizeX":1, "sizeY":1, "$$hashKey":"object:22",
+                        "name":"Máy Giặt", "type":"SwitchItem", "state":"OFF",
+                        "link": ""
+                    },{
+                        "name":"Weather Chart", "sizeX":3,"sizeY":4, "$$hashKey":"object:23", "row":0, "col":5
+                    },{
+                        "name":"Clock","sizeX":3,"sizeY":1, "$$hashKey":"object:24", "row":4, "col":5
+                    },{
+                        "name":"Cửa Chính", "sizeX":1, "sizeY":1, "$$hashKey":"object:25", "row":4, "col":4,
+                        "type":"SwitchItem", "state":"OFF",
+                        "link": ""
+                    }]
+                },
+
+                "2": {
+                    "id":"2",
+                    "name":"Other",
+                    "widgets":[]
+                }
+            };  
+            
+            $rootScope.dashboards = $scope.dashboards;
+        }
 
 		$scope.clear = function() {
 			$scope.dashboard.widgets = [];
@@ -207,21 +181,6 @@ angular.module('app')
 			console.log(JSON.stringify($scope.dashboards));
 		};
         
-        // We want to manually handle `window.resize` event in each directive.
-        // So that we emulate `resize` event using $broadcast method and internally subscribe to this event in each directive
-        // Define event handler
-        $scope.events = {
-            resize: function(e, scope){
-                $timeout(function(){
-                    //scope.api.update()
-                },200)
-            }
-        };
-
-        angular.element(window).on('resize', function(e){
-            $scope.$broadcast('resize');
-        });
-        
         $scope.start_polling = function () {
             var interval = 5000;
             if (!$scope.polling_status) {
@@ -229,10 +188,21 @@ angular.module('app')
                 $scope.polling_promise = $interval(function() {
                     // update state for all widget here
                     angular.forEach($scope.dashboard.widgets, function(widget) {
-                        dashboardService.getItem(widget.link).then(function(response) {
-                            //console.log(response.data);
-                            widget.state = response.data.state;
-                        });
+                        if (widget.link) {
+                            dashboardService.getItem(widget.link).then(function(response) {
+                                //console.log(response.data);
+                                widget.state = response.data.state;
+                                
+                                //convert flaot number to 2 digits rounded
+                                val = parseFloat(widget.state);
+                                if(!isNaN(val)) {
+                                    widget.state = val.toFixed(1);
+                                }
+                            }, function(err) {
+                                console.log(err);
+                            });    
+                        }
+                        
                     });
                 }, interval);
             }
@@ -258,6 +228,12 @@ angular.module('app')
             dashboardService.setItemState (widget.link, widget.state).then(function() {
                 console.log('Updated state');
             })
+        }
+        
+        $scope.showChart = function(widget) {
+            if (!widget.hasChart) {
+                $location.path('/chart/' + widget.name);    
+            }
         }
         
         init();

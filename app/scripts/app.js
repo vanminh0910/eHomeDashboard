@@ -22,6 +22,10 @@
                         templateUrl: templatePath + 'dashboard/dashboard.html',
                         controller: 'DashboardCtrl'
                     })
+                    .when('/chart/:item', {
+                        templateUrl: templatePath + 'chart/chart.html',
+                        controller: 'ChartCtrl'
+                    })
                     .otherwise({
                         redirectTo: '/dashboard'
                     });

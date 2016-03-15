@@ -101,3 +101,12 @@ form {
 .gridster-item {
     border: 1px solid #ccc;
 }
+
+.chart-view {
+    width: 1030;
+    height: 630;
+    margin: auto;
+    border: 1px solid #436D7C;
+    background-color: white;
+    outline: none;
+}
